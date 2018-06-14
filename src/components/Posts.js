@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import _ from 'lodash';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { fetchPosts } from '../actions';
 
@@ -11,7 +12,7 @@ class Posts extends Component {
   renderPosts = () => {
     return _.map(this.props.posts, post => (
       <li key={post.id} className="list-group-item">
-        {post.title}
+        <Link to={`/posts/${post.id}`}>{post.title}</Link>
       </li>
     ))
   };
@@ -19,8 +20,13 @@ class Posts extends Component {
   render() {
     return (
       <div>
+        <div className="text-xs-right">
+          <Link to="/posts/new" className="btn btn-primary">
+            Add a Post
+          </Link>
+        </div>
         <h3>Posts</h3>
-        <ul class="list-group">
+        <ul className="list-group">
           {this.renderPosts()}
         </ul>
       </div>
@@ -28,7 +34,7 @@ class Posts extends Component {
   }
 }
 
-function mapStateToProps() {
+function mapStateToProps(state) {
   return { posts: state.posts }
 }
 
